@@ -1,6 +1,6 @@
-from src.Tree import AVLTree, Node  # CamelCase for class names
+from src.Tree import AVLTree, Node
 
-def testFind():  # CamelCase for function names
+def testFind():
     tree = AVLTree()
     assert tree.find(1) == None, "Find should return None for an empty tree"
 
