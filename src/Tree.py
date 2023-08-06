@@ -139,8 +139,6 @@ class AVLTree:
             else:
                 node.left = self.rotateLeft(node.left)
                 node = self.rotateRight(node)
-#        else:
-#            self.fixHeight(node)
         return node
 
     def reBalanceRight(self, node):
@@ -151,8 +149,6 @@ class AVLTree:
             else:
                 node.right = self.rotateRight(node.right)
                 node = self.rotateLeft(node)
-#        else:
-#            self.fixHeight(node)
         return node
 
     def isSubtreeHeightDifferenceTwo(self, node):

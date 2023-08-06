@@ -106,6 +106,9 @@ def testRightLeftInBalance():
 
     keysToInsert = [1, 3, 2]
 
+    for key in keysToInsert:
+        tree.insert(key)
+
     assert tree.root.key == 2, "The root should have a value of 2 after balancing"
     assert tree.root.height == 1, "The root should have a height of 1 after balancing"
     assert tree.root.left.key == 1, "The left key is equal to 1"
@@ -116,6 +119,9 @@ def testLeftRightInBalance():
     tree = AVLTree()
 
     keysToInsert = [3, 1, 2]
+
+    for key in keysToInsert:
+        tree.insert(key)
 
     assert tree.root.key == 2, "The root should have a value of 2 after balancing"
     assert tree.root.height == 1, "The root should have a height of 1 after balancing"
