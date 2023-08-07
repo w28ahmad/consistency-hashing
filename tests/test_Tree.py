@@ -160,6 +160,7 @@ def testRightInsertLoadTest():
     assert tree.root.key == 16, "Root should be 16"
     assert tree.root.right.key == 20, "Root.right should be 20"
     assert tree.root.left.key == 8, "Root.left should be 8"
+    assert tree.isValid(tree.root), "The tree is left in a valid state"
 
 def testLeftInsertLoadTest():
     tree = AVLTree()
@@ -172,13 +173,46 @@ def testLeftInsertLoadTest():
     assert tree.root.key == 9, "Root should be 9"
     assert tree.root.right.key == 17, "Root.right should be 17"
     assert tree.root.left.key == 5, "Root.left should be 5"
+    assert tree.isValid(tree.root), "The tree is left in a valid state"
+
+def testBasicRootDeletion():
+    tree = AVLTree()
+    tree.insert(1)
+    tree.delete(1)
+
+    assert tree.root == None, "Root is deleted and is None"
+
+def testBasicLeftDeletion():
+    tree = AVLTree()
+    tree.insert(1)
+    tree.insert(2)
+    tree.delete(2)
+
+    assert tree.root.key == 1, "Root remains 1"
+    assert tree.root.left == None, "Root left is None"
+    assert tree.root.right == None, "Root right is removed"
+    assert tree.isValid(tree.root), "The tree is left in a valid state"
+
+def testBasicRightDeletion():
+    tree = AVLTree()
+    tree.insert(2)
+    tree.insert(1)
+    tree.delete(1)
+
+    assert tree.root.key == 2, "Root remains 2"
+    assert tree.root.right == None, "Root right is None"
+    assert tree.root.left == None, "Root left is Removed"
+    assert tree.isValid(tree.root), "The tree is left in a valid state"
 
 def runTests():
+    # Test basic BST methods
     testFind()
     testInsert()
     testIsHeightValid()
     testIsBalanced()
     testComplexBinaryTreeOperations()
+
+    # Test Insertion Balancing
     testBasicRightTreeInBalance()
     testBasicLeftTreeInBalance()
     testRightLeftInBalance()
@@ -186,6 +220,12 @@ def runTests():
     testComplexLeftRightAndRightLeftTreeBalance()
     testRightInsertLoadTest()
     testLeftInsertLoadTest()
+
+    # Test Deletion Balancing
+    testBasicRootDeletion()
+    testBasicLeftDeletion()
+    testBasicRightDeletion()
+
     print("All tests passed!")
 
 if __name__ == "__main__":

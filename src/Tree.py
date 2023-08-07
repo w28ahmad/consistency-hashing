@@ -12,38 +12,6 @@ Defs:
 To balance the trees we often need to consider left and right
 rotations.
 
-Left Rotation
-
-Before:
-   10
-  /  \
- 5    15
-     /  \
-    13   20
-
-After:
-    15
-   /  \
-  10   20
- /  \
-5   13
-
-
-Right Rotation
-
-Before:
-   20
-  /  \
- 15   25
-/  \
-10  18
-
-After:
-    15
-   /  \
-  10   20
-      /  \
-     18   25
 '''
 
 class Node:
@@ -93,6 +61,46 @@ class AVLTree:
                     self.checkAndGetHeight(parent.right)) + 1
             return parent
         self.root = insertHelper(key, self.root)
+
+    def getSuccessor(self, node):
+        node = node.right
+        while node.left:
+            node = node.left
+        return node
+
+    def delete(self, key):
+        def deleteHelper(key, node):
+            if node == None:
+                return None
+            if node.key == key:
+                hasLeftNode = node.left != None
+                hasRightNode = node.right != None
+
+                if hasLeftNode and hasRightNode:
+                    successor = self.getSuccessor(node)
+                    successor.right = deleteHelper(successor.key, \
+                            node.right)
+                    successor.left = node.left
+                    return successor
+                elif hasLeftNode:
+                    return node.left
+                elif hasRightNode:
+                    return node.right
+                else:
+                    return None
+            elif key > node.key:
+                node.right = deleteHelper(key, node.right)
+                node = self.reBalanceRight(node)
+                self.fixHeight(node)
+            else:
+                node.left = deleteHelper(key, node.left)
+                node = self.reBalanceLeft(node)
+                self.fixHeight(node)
+
+            node.height = max(self.checkAndGetHeight(node.left), \
+                    self.checkAndGetHeight(node.right)) + 1
+            return node
+        self.root = deleteHelper(key, self.root)
 
     def isHeightValid(self, node):
         if node == None:
