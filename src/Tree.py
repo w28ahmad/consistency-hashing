@@ -78,14 +78,14 @@ class AVLTree:
                 if parent.right == None:
                     parent.right = Node(key)
                 else:
-                    insertHelper(key, parent.right)
+                    parent.right = insertHelper(key, parent.right)
                     parent = self.reBalanceRight(parent)
                     self.fixHeight(parent)
             else:
                 if parent.left == None:
                     parent.left = Node(key)
                 else:
-                    insertHelper(key, parent.left)
+                    parent.left = insertHelper(key, parent.left)
                     parent = self.reBalanceLeft(parent)
                     self.fixHeight(parent)
 
@@ -181,4 +181,20 @@ class AVLTree:
         newParent.right = parent
         return newParent
 
+    def printTree(self, root):
+        from asciitree import LeftAligned
+        from collections import OrderedDict as OD
 
+        tree = LeftAligned()
+
+        def add_node(node):
+            if node is None:
+                return {}
+            res = OD()
+            if node.left is not None:
+                res['left'] = add_node(node.left)
+            if node.right is not None:
+                res['right'] = add_node(node.right)
+            return {node.key: res}
+
+        print(tree(add_node(root)))

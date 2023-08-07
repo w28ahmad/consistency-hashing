@@ -149,6 +149,30 @@ def testComplexLeftRightAndRightLeftTreeBalance():
     assert tree.root.height == 3, "The tree has a height of 3"
     assert tree.isValid(tree.root), "The tree is left in a valid state"
 
+def testRightInsertLoadTest():
+    tree = AVLTree()
+
+    keysToInsert = [i for i in range(1, 25)]
+
+    for key in keysToInsert:
+        tree.insert(key)
+
+    assert tree.root.key == 16, "Root should be 16"
+    assert tree.root.right.key == 20, "Root.right should be 20"
+    assert tree.root.left.key == 8, "Root.left should be 8"
+
+def testLeftInsertLoadTest():
+    tree = AVLTree()
+
+    keysToInsert = [i for i in range(24, 0, -1)]
+
+    for key in keysToInsert:
+        tree.insert(key)
+
+    assert tree.root.key == 9, "Root should be 9"
+    assert tree.root.right.key == 17, "Root.right should be 17"
+    assert tree.root.left.key == 5, "Root.left should be 5"
+
 def runTests():
     testFind()
     testInsert()
@@ -160,6 +184,8 @@ def runTests():
     testRightLeftInBalance()
     testLeftRightInBalance()
     testComplexLeftRightAndRightLeftTreeBalance()
+    testRightInsertLoadTest()
+    testLeftInsertLoadTest()
     print("All tests passed!")
 
 if __name__ == "__main__":
