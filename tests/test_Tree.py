@@ -43,34 +43,26 @@ def testIsBalanced():
 def testComplexBinaryTreeOperations():
     tree = AVLTree()
 
-    # Insert values
     keysToInsert = [5, 2, 8, 1, 3, 7, 10, 4, 6, 9, 11]
     for key in keysToInsert:
         tree.insert(key)
 
-    # Check the root
     assert tree.root.key == 5, "The root key should be 5"
     assert tree.root.height == 3, "The root height should be 4"
 
-    # Check isHeightValid
     assert tree.isHeightValid(tree.root), "isHeightValid should return True"
 
-    # Check isOrdered
     assert tree.isOrdered(tree.root), "isOrdered should return True"
 
-    # Check find
     for key in keysToInsert:
         node = tree.find(key)
         assert isinstance(node, Node), f"Find should return a Node for existing key {key}"
         assert node.key == key, f"Find should return the correct Node for key {key}"
 
-        # Check isBalanced - this test assumes that tree is properly balanced after inserts
         assert tree.isBalanced(node), "isBalanced should return True"
 
-    # Check find for non-existent key
     assert tree.find(100) == None, "Find should return None for non-existing key 100"
 
-    # The tree is valid AVLTree
     assert tree.isValid(tree.root), "The tree is left in a valid state"
 
 def testBasicRightTreeInBalance():
@@ -229,6 +221,5 @@ def runTests():
     print("All tests passed!")
 
 if __name__ == "__main__":
-
     runTests()
 
