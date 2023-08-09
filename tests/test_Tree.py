@@ -255,14 +255,13 @@ def testRootDeleteLoadTest():
 
     for key in keysToInsert:
         tree.insert(key)
+        assert tree.isValid(tree.root), f"The tree is left valid after inserting key: {key}"
 
     for i in range(len(keysToInsert)):
         deletionKey = tree.root.key
         tree.delete(deletionKey)
 
-        print(i, deletionKey)
-        assert tree.isValid(tree.root), f"The tree is left valid after deleting \
-                key: {deletionKey}"
+        assert tree.isValid(tree.root), f"The tree is left valid after deleting key: {deletionKey}"
 
     assert tree.root == None, "All nodes are removed"
 

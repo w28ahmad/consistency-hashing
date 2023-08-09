@@ -48,17 +48,16 @@ class AVLTree:
                 else:
                     parent.right = insertHelper(key, parent.right)
                     parent = self.reBalanceRight(parent)
-                    self.fixHeight(parent)
+                    parent.height = self.fixHeight(parent)
             else:
                 if parent.left == None:
                     parent.left = Node(key)
                 else:
                     parent.left = insertHelper(key, parent.left)
                     parent = self.reBalanceLeft(parent)
-                    self.fixHeight(parent)
+                    parent.height = self.fixHeight(parent)
 
-            parent.height = max(self.checkAndGetHeight(parent.left), \
-                    self.checkAndGetHeight(parent.right)) + 1
+            self.updateNodeHeight(parent)
             return parent
         self.root = insertHelper(key, self.root)
 
@@ -78,11 +77,10 @@ class AVLTree:
 
                 if hasLeftNode and hasRightNode:
                     successor = self.getSuccessor(node)
-                    successor.right = deleteHelper(successor.key, \
-                            node.right)
+                    successor.right = deleteHelper(successor.key, node.right)
                     successor.left = node.left
-                    if node == self.root:
-                        self.fixHeight(node)
+                    successor = self.reBalanceLeft(successor)
+                    successor.height = self.fixHeight(successor)
                     return successor
                 elif hasLeftNode:
                     return node.left
@@ -93,16 +91,20 @@ class AVLTree:
             elif key > node.key:
                 node.right = deleteHelper(key, node.right)
                 node = self.reBalanceLeft(node)
-                self.fixHeight(node)
+                node.height = self.fixHeight(node)
             else:
                 node.left = deleteHelper(key, node.left)
                 node = self.reBalanceRight(node)
-                self.fixHeight(node)
+                node.height = self.fixHeight(node)
 
-            node.height = max(self.checkAndGetHeight(node.left), \
-                    self.checkAndGetHeight(node.right)) + 1
+            self.updateNodeHeight(node)
             return node
         self.root = deleteHelper(key, self.root)
+
+    def updateNodeHeight(self, node):
+        node.height = max(self.checkAndGetHeight(node.left), \
+            self.checkAndGetHeight(node.right)) + 1
+        return node
 
     def isHeightValid(self, node):
         if node == None:
@@ -112,6 +114,8 @@ class AVLTree:
         if node.right:
             expectedHeight = max(expectedHeight, node.right.height)
 
+        if expectedHeight+1 != node.height:
+            print(f"node with key: {node.key} expected to have height: {expectedHeight+1} but instead has height of: {node.height}")
         return expectedHeight+1 == node.height and \
                 self.isHeightValid(node.left) and \
                 self.isHeightValid(node.right)
@@ -126,11 +130,17 @@ class AVLTree:
         if node.right:
             rightHeight = node.right.height
 
+        if not abs(leftHeight - rightHeight) <= 1:
+                print(f"node with key {node.key} has a left height of: {leftHeight} and right height of: {rightHeight}")
+
         return abs(leftHeight - rightHeight) <= 1
 
     def isOrdered(self, node, min=-float('inf'), max=float('inf')):
-        if not node:
+        if node == None:
             return True
+
+        if not (min <= node.key < max):
+            print(f"node with key: {node.key} not between {min} and {max}")
 
         return min <= node.key < max and \
                 self.isOrdered(node.left, min, node.key) and \
