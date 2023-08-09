@@ -81,6 +81,8 @@ class AVLTree:
                     successor.right = deleteHelper(successor.key, \
                             node.right)
                     successor.left = node.left
+                    if node == self.root:
+                        self.fixHeight(node)
                     return successor
                 elif hasLeftNode:
                     return node.left

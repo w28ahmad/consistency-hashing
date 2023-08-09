@@ -196,6 +196,55 @@ def testBasicRightDeletion():
     assert tree.root.left == None, "Root left is Removed"
     assert tree.isValid(tree.root), "The tree is left in a valid state"
 
+def testRootRightReplacementDuringDeletion():
+    tree = AVLTree()
+    tree.insert(2)
+    tree.insert(3)
+    tree.insert(1)
+    tree.delete(2)
+
+    assert tree.root.key == 3, "Root is replaced by right node"
+    assert tree.root.left.key == 1, "Root left is the same"
+    assert tree.isValid(tree.root), "The tree is left in a valid state"
+
+def testRootLeftReplacementDuringDeletion():
+    tree = AVLTree()
+    tree.insert(2)
+    tree.insert(1)
+    tree.delete(2)
+
+    assert tree.root.key == 1, "Root is replaced by right node"
+    assert tree.isValid(tree.root), "The tree is left in a valid state"
+
+def testInorderDeleteLoadTest():
+    tree = AVLTree()
+
+    keysToInsertAndDelete = [i for i in range(1, 25)]
+
+    for key in keysToInsertAndDelete:
+        tree.insert(key)
+
+    for key in keysToInsertAndDelete:
+        print(f"Deleting Key: {key}")
+        tree.printTree(tree.root)
+        tree.delete(key)
+        assert tree.isValid(tree.root), f"The tree is left valid after deleting \
+                key: {key}"
+
+def testNonInorderDeleteLoadTest():
+    tree = AVLTree()
+
+    keysToInsertAndDelete = [i for i in range(1, 25)]
+
+    for key in keysToInsertAndDelete:
+        tree.insert(key)
+
+    for key in keysToInsertAndDelete[::-1]:
+        tree.delete(key)
+
+        assert tree.isValid(tree.root), f"The tree is left valid after deleting \
+                key: {key}"
+
 def runTests():
     # Test basic BST methods
     testFind()
@@ -217,6 +266,10 @@ def runTests():
     testBasicRootDeletion()
     testBasicLeftDeletion()
     testBasicRightDeletion()
+    testRootRightReplacementDuringDeletion()
+    testRootLeftReplacementDuringDeletion()
+    testInorderDeleteLoadTest()
+    testNonInorderDeleteLoadTest()
 
     print("All tests passed!")
 
