@@ -14,12 +14,13 @@ rotations.
 
 '''
 
+
 class Node:
     def __init__(self, key, left=None, right=None):
-        self.key = key
         self.left = left
         self.right = right
         self.height = 0
+
 
 class AVLTree:
     def __init__(self, root=None):
@@ -27,7 +28,7 @@ class AVLTree:
 
     def find(self, key):
         def findHelper(key, parent):
-            if parent == None:
+            if parent is None:
                 return None
             if parent.key == key:
                 return parent
@@ -38,19 +39,19 @@ class AVLTree:
 
     def insert(self, key):
         def insertHelper(key, parent):
-            if parent == None:
+            if parent is None:
                 self.root = Node(key)
                 return self.root
 
             if key > parent.key:
-                if parent.right == None:
+                if parent.right is None:
                     parent.right = Node(key)
                 else:
                     parent.right = insertHelper(key, parent.right)
                     parent = self.reBalanceRight(parent)
                     parent.height = self.fixHeight(parent)
             else:
-                if parent.left == None:
+                if parent.left is None:
                     parent.left = Node(key)
                 else:
                     parent.left = insertHelper(key, parent.left)
@@ -69,11 +70,11 @@ class AVLTree:
 
     def delete(self, key):
         def deleteHelper(key, node):
-            if node == None:
+            if node is None:
                 return None
             if node.key == key:
-                hasLeftNode = node.left != None
-                hasRightNode = node.right != None
+                hasLeftNode = node.left is not None
+                hasRightNode = node.right is not None
 
                 if hasLeftNode and hasRightNode:
                     successor = self.getSuccessor(node)
@@ -107,7 +108,7 @@ class AVLTree:
         return node
 
     def isHeightValid(self, node):
-        if node == None:
+        if node is None:
             return True
 
         expectedHeight = node.left.height if node.left else -1
@@ -121,7 +122,7 @@ class AVLTree:
                 self.isHeightValid(node.right)
 
     def isBalanced(self, node):
-        if node == None:
+        if node is None:
             return True
 
         leftHeight = rightHeight = 0
@@ -131,12 +132,12 @@ class AVLTree:
             rightHeight = node.right.height
 
         if not abs(leftHeight - rightHeight) <= 1:
-                print(f"node with key {node.key} has a left height of: {leftHeight} and right height of: {rightHeight}")
+            print(f"node with key {node.key} has a left height of: {leftHeight} and right height of: {rightHeight}")
 
         return abs(leftHeight - rightHeight) <= 1
 
     def isOrdered(self, node, min=-float('inf'), max=float('inf')):
-        if node == None:
+        if node is None:
             return True
 
         if not (min <= node.key < max):
@@ -147,7 +148,7 @@ class AVLTree:
                 self.isOrdered(node.right, node.key, max)
 
     def isValid(self, node):
-        if node == None:
+        if node is None:
             return True
 
         return self.isOrdered(node) and \
@@ -179,7 +180,7 @@ class AVLTree:
                 self.checkAndGetHeight(node.right)) == 2
 
     def fixHeight(self, node):
-        if node == None:
+        if node is None:
             return -1
 
         leftHeight = self.fixHeight(node.left)
@@ -188,7 +189,7 @@ class AVLTree:
         return node.height
 
     def checkAndGetHeight(self, node):
-        if node == None:
+        if node is None:
             return -1
         return node.height
 
