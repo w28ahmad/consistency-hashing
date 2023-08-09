@@ -92,11 +92,11 @@ class AVLTree:
                     return None
             elif key > node.key:
                 node.right = deleteHelper(key, node.right)
-                node = self.reBalanceRight(node)
+                node = self.reBalanceLeft(node)
                 self.fixHeight(node)
             else:
                 node.left = deleteHelper(key, node.left)
-                node = self.reBalanceLeft(node)
+                node = self.reBalanceRight(node)
                 self.fixHeight(node)
 
             node.height = max(self.checkAndGetHeight(node.left), \
@@ -137,7 +137,10 @@ class AVLTree:
                 self.isOrdered(node.right, node.key, max)
 
     def isValid(self, node):
-       return self.isOrdered(node) and \
+        if node == None:
+            return True
+
+        return self.isOrdered(node) and \
                self.isHeightValid(node) and \
                self.isBalanced(node)
 

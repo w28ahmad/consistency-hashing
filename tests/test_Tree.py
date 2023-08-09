@@ -225,11 +225,12 @@ def testInorderDeleteLoadTest():
         tree.insert(key)
 
     for key in keysToInsertAndDelete:
-        print(f"Deleting Key: {key}")
-        tree.printTree(tree.root)
         tree.delete(key)
+
         assert tree.isValid(tree.root), f"The tree is left valid after deleting \
                 key: {key}"
+
+    assert tree.root == None, "All nodes are removed"
 
 def testNonInorderDeleteLoadTest():
     tree = AVLTree()
@@ -244,6 +245,26 @@ def testNonInorderDeleteLoadTest():
 
         assert tree.isValid(tree.root), f"The tree is left valid after deleting \
                 key: {key}"
+
+    assert tree.root == None, "All nodes are removed"
+
+def testRootDeleteLoadTest():
+    tree = AVLTree()
+
+    keysToInsert = [i for i in range(100)]
+
+    for key in keysToInsert:
+        tree.insert(key)
+
+    for i in range(len(keysToInsert)):
+        deletionKey = tree.root.key
+        tree.delete(deletionKey)
+
+        print(i, deletionKey)
+        assert tree.isValid(tree.root), f"The tree is left valid after deleting \
+                key: {deletionKey}"
+
+    assert tree.root == None, "All nodes are removed"
 
 def runTests():
     # Test basic BST methods
@@ -270,6 +291,7 @@ def runTests():
     testRootLeftReplacementDuringDeletion()
     testInorderDeleteLoadTest()
     testNonInorderDeleteLoadTest()
+    testRootDeleteLoadTest()
 
     print("All tests passed!")
 
