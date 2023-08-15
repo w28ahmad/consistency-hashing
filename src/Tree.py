@@ -16,9 +16,11 @@ rotations.
 
 
 class Node:
-    def __init__(self, key, left=None, right=None):
+    def __init__(self, key, left=None, right=None, data=None):
+        self.key = key
         self.left = left
         self.right = right
+        self.data = data
         self.height = 0
 
 

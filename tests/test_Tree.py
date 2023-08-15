@@ -1,14 +1,17 @@
 from src.Tree import AVLTree, Node
 
+
 def testFind():
     tree = AVLTree()
-    assert tree.find(1) == None, "Find should return None for an empty tree"
+    assert tree.find(1) is None, "Find should return None for an empty tree"
 
     tree.insert(1)
-    assert isinstance(tree.find(1), Node), "Find should return a Node for existing key"
+    assert isinstance(tree.find(1), Node), "Find should return a \
+            Node for existing key"
     assert tree.find(1).key == 1, "Find should return the correct Node"
 
-    assert tree.find(2) == None, "Find should return None for non-existing key"
+    assert tree.find(2) is None, "Find should return None for non-existing key"
+
 
 def testInsert():
     tree = AVLTree()
@@ -18,27 +21,36 @@ def testInsert():
     assert tree.root.height == 0, "Root height should be 0 after inserting 1"
 
     tree.insert(2)
-    assert tree.root.right.key == 2, "The right child of root should have key 2 after inserting 2"
-    assert tree.root.right.height == 0, "The right child of root should have height 1 after inserting 2"
+    assert tree.root.right.key == 2, "The right child of root \
+            should have key 2 after inserting 2"
+    assert tree.root.right.height == 0, "The right child of root \
+            should have height 1 after inserting 2"
     assert tree.root.height == 1, "Root height should be 1 after inserting 2"
+
 
 def testIsHeightValid():
     tree = AVLTree()
 
     tree.insert(1)
-    assert tree.isHeightValid(tree.root), "isHeightValid should return True after inserting 1"
+    assert tree.isHeightValid(tree.root), "isHeightValid should return \
+            True after inserting 1"
 
     tree.insert(2)
-    assert tree.isHeightValid(tree.root), "isHeightValid should return True after inserting 2"
+    assert tree.isHeightValid(tree.root), "isHeightValid should return \
+            True after inserting 2"
+
 
 def testIsBalanced():
     tree = AVLTree()
 
     tree.insert(1)
-    assert tree.isBalanced(tree.root), "isBalanced should return True after inserting 1"
+    assert tree.isBalanced(tree.root), "isBalanced should return \
+            True after inserting 1"
 
     tree.insert(2)
-    assert tree.isBalanced(tree.root), "isBalanced should return True after inserting 2"
+    assert tree.isBalanced(tree.root), "isBalanced should return \
+            True after inserting 2"
+
 
 def testComplexBinaryTreeOperations():
     tree = AVLTree()
@@ -56,14 +68,18 @@ def testComplexBinaryTreeOperations():
 
     for key in keysToInsert:
         node = tree.find(key)
-        assert isinstance(node, Node), f"Find should return a Node for existing key {key}"
-        assert node.key == key, f"Find should return the correct Node for key {key}"
+        assert isinstance(node, Node), f"Find should return a \
+                Node for existing key {key}"
+        assert node.key == key, f"Find should return the \
+                correct Node for key {key}"
 
         assert tree.isBalanced(node), "isBalanced should return True"
 
-    assert tree.find(100) == None, "Find should return None for non-existing key 100"
+    assert tree.find(100) is None, "Find should return \
+            None for non-existing key 100"
 
     assert tree.isValid(tree.root), "The tree is left in a valid state"
+
 
 def testBasicRightTreeInBalance():
     tree = AVLTree()
@@ -73,11 +89,14 @@ def testBasicRightTreeInBalance():
     for key in keysToInsert:
         tree.insert(key)
 
-    assert tree.root.key == 2, "The root should have a value of 2 after balancing"
-    assert tree.root.height == 1, "The root should have a height of 1 after balancing"
+    assert tree.root.key == 2, "The root should have a value of \
+            2 after balancing"
+    assert tree.root.height == 1, "The root should have a height of \
+            1 after balancing"
     assert tree.root.left.key == 1, "The left key is equal to 1"
     assert tree.root.right.key == 3, "The right key is equal to 3"
     assert tree.isValid(tree.root), "The tree is left in a valid state"
+
 
 def testBasicLeftTreeInBalance():
     tree = AVLTree()
@@ -87,11 +106,14 @@ def testBasicLeftTreeInBalance():
     for key in keysToInsert:
         tree.insert(key)
 
-    assert tree.root.key == 2, "The root should have a value of 2 after balancing"
-    assert tree.root.height == 1, "The root should have a height of 1 after balancing"
+    assert tree.root.key == 2, "The root should have a value of \
+            2 after balancing"
+    assert tree.root.height == 1, "The root should have a height of \
+            1 after balancing"
     assert tree.root.left.key == 1, "The left key is equal to 1"
     assert tree.root.right.key == 3, "The right key is equal to 3"
     assert tree.isValid(tree.root), "The tree is left in a valid state"
+
 
 def testRightLeftInBalance():
     tree = AVLTree()
@@ -101,11 +123,14 @@ def testRightLeftInBalance():
     for key in keysToInsert:
         tree.insert(key)
 
-    assert tree.root.key == 2, "The root should have a value of 2 after balancing"
-    assert tree.root.height == 1, "The root should have a height of 1 after balancing"
+    assert tree.root.key == 2, "The root should have a \
+            value of 2 after balancing"
+    assert tree.root.height == 1, "The root should have a \
+            height of 1 after balancing"
     assert tree.root.left.key == 1, "The left key is equal to 1"
     assert tree.root.right.key == 3, "The right key is equal to 3"
     assert tree.isValid(tree.root), "The tree is left in a valid state"
+
 
 def testLeftRightInBalance():
     tree = AVLTree()
@@ -115,11 +140,14 @@ def testLeftRightInBalance():
     for key in keysToInsert:
         tree.insert(key)
 
-    assert tree.root.key == 2, "The root should have a value of 2 after balancing"
-    assert tree.root.height == 1, "The root should have a height of 1 after balancing"
+    assert tree.root.key == 2, "The root should have a value \
+            of 2 after balancing"
+    assert tree.root.height == 1, "The root should have a \
+            height of 1 after balancing"
     assert tree.root.left.key == 1, "The left key is equal to 1"
     assert tree.root.right.key == 3, "The right key is equal to 3"
     assert tree.isValid(tree.root), "The tree is left in a valid state"
+
 
 def testComplexLeftRightAndRightLeftTreeBalance():
     tree = AVLTree()
@@ -136,10 +164,12 @@ def testComplexLeftRightAndRightLeftTreeBalance():
     assert tree.root.right.key == 30, "20's right child should be 30"
     assert tree.root.right.left.key == 25, "30's left child should be 25"
     assert tree.root.right.right.key == 35, "30's right child should be 35"
-    assert tree.root.right.right.right.key == 40, "35's right child should be 40"
+    assert tree.root.right.right.right.key == 40, "35's right \
+            child should be 40"
 
     assert tree.root.height == 3, "The tree has a height of 3"
     assert tree.isValid(tree.root), "The tree is left in a valid state"
+
 
 def testRightInsertLoadTest():
     tree = AVLTree()
@@ -154,6 +184,7 @@ def testRightInsertLoadTest():
     assert tree.root.left.key == 8, "Root.left should be 8"
     assert tree.isValid(tree.root), "The tree is left in a valid state"
 
+
 def testLeftInsertLoadTest():
     tree = AVLTree()
 
@@ -167,12 +198,14 @@ def testLeftInsertLoadTest():
     assert tree.root.left.key == 5, "Root.left should be 5"
     assert tree.isValid(tree.root), "The tree is left in a valid state"
 
+
 def testBasicRootDeletion():
     tree = AVLTree()
     tree.insert(1)
     tree.delete(1)
 
-    assert tree.root == None, "Root is deleted and is None"
+    assert tree.root is None, "Root is deleted and is None"
+
 
 def testBasicLeftDeletion():
     tree = AVLTree()
@@ -181,8 +214,8 @@ def testBasicLeftDeletion():
     tree.delete(2)
 
     assert tree.root.key == 1, "Root remains 1"
-    assert tree.root.left == None, "Root left is None"
-    assert tree.root.right == None, "Root right is removed"
+    assert tree.root.left is None, "Root left is None"
+    assert tree.root.right is None, "Root right is removed"
     assert tree.isValid(tree.root), "The tree is left in a valid state"
 
 def testBasicRightDeletion():
@@ -192,9 +225,10 @@ def testBasicRightDeletion():
     tree.delete(1)
 
     assert tree.root.key == 2, "Root remains 2"
-    assert tree.root.right == None, "Root right is None"
-    assert tree.root.left == None, "Root left is Removed"
+    assert tree.root.right is None, "Root right is None"
+    assert tree.root.left is None, "Root left is Removed"
     assert tree.isValid(tree.root), "The tree is left in a valid state"
+
 
 def testRootRightReplacementDuringDeletion():
     tree = AVLTree()
@@ -207,6 +241,7 @@ def testRootRightReplacementDuringDeletion():
     assert tree.root.left.key == 1, "Root left is the same"
     assert tree.isValid(tree.root), "The tree is left in a valid state"
 
+
 def testRootLeftReplacementDuringDeletion():
     tree = AVLTree()
     tree.insert(2)
@@ -215,6 +250,7 @@ def testRootLeftReplacementDuringDeletion():
 
     assert tree.root.key == 1, "Root is replaced by right node"
     assert tree.isValid(tree.root), "The tree is left in a valid state"
+
 
 def testInorderDeleteLoadTest():
     tree = AVLTree()
@@ -227,10 +263,12 @@ def testInorderDeleteLoadTest():
     for key in keysToInsertAndDelete:
         tree.delete(key)
 
-        assert tree.isValid(tree.root), f"The tree is left valid after deleting \
+        assert tree.isValid(tree.root), f"The tree is left \
+                valid after deleting \
                 key: {key}"
 
-    assert tree.root == None, "All nodes are removed"
+    assert tree.root is None, "All nodes are removed"
+
 
 def testNonInorderDeleteLoadTest():
     tree = AVLTree()
@@ -243,10 +281,12 @@ def testNonInorderDeleteLoadTest():
     for key in keysToInsertAndDelete[::-1]:
         tree.delete(key)
 
-        assert tree.isValid(tree.root), f"The tree is left valid after deleting \
+        assert tree.isValid(tree.root), f"The tree is left \
+                valid after deleting \
                 key: {key}"
 
-    assert tree.root == None, "All nodes are removed"
+    assert tree.root is None, "All nodes are removed"
+
 
 def testRootDeleteLoadTest():
     tree = AVLTree()
@@ -255,15 +295,18 @@ def testRootDeleteLoadTest():
 
     for key in keysToInsert:
         tree.insert(key)
-        assert tree.isValid(tree.root), f"The tree is left valid after inserting key: {key}"
+        assert tree.isValid(tree.root), f"The tree is left valid \
+                after inserting key: {key}"
 
     for i in range(len(keysToInsert)):
         deletionKey = tree.root.key
         tree.delete(deletionKey)
 
-        assert tree.isValid(tree.root), f"The tree is left valid after deleting key: {deletionKey}"
+        assert tree.isValid(tree.root), f"The tree is left valid \
+                after deleting key: {deletionKey}"
 
-    assert tree.root == None, "All nodes are removed"
+    assert tree.root is None, "All nodes are removed"
+
 
 def runTests():
     # Test basic BST methods
@@ -294,6 +337,6 @@ def runTests():
 
     print("All tests passed!")
 
+
 if __name__ == "__main__":
     runTests()
-
