@@ -21,6 +21,13 @@ class HashRing:
     '''
 
     def addNode(self, nodeId):
+        # Get hashInt
+
+        # Add the node to the AVLTree
+
+        # Move data from next node that
+        # Belongs in this node
+
         pass
 
     '''
@@ -29,6 +36,14 @@ class HashRing:
     '''
 
     def removeNode(self, nodeId):
+        # Get hashInt
+
+        # Get the node
+
+        # Move the data out to next node on ring
+
+        # Remove node
+
         pass
 
     '''
@@ -37,6 +52,11 @@ class HashRing:
     '''
 
     def addData(self, key, data):
+        # Find the hashInt
+
+        # Find the node where data needs to go
+
+        # Add the data to the node
         pass
 
     '''
@@ -45,4 +65,9 @@ class HashRing:
     '''
 
     def getData(self, key):
+        # Find hashInt
+
+        # Find the node where the data should exist
+
+        # Get the data from the node
         pass
