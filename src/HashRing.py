@@ -7,12 +7,12 @@ class HashRing:
         self.hashring = AVLTree()
 
     '''
-    @param key: String
+    @param id: String
     @returns Int
     '''
 
-    def hashInt(self, key):
-        hash = sha256(key.encode())
+    def hashInt(self, id):
+        hash = sha256(id.encode())
         return int(hash.hexdigest(), 16)
 
     '''
@@ -20,14 +20,16 @@ class HashRing:
     @returns Node
     '''
 
-    def addNode(self, nodeId):
+    def putNode(self, nodeId):
         # Get hashInt
+        key = self.hashInt(nodeId)
 
         # Add the node to the AVLTree
+        self.hashring.insert(key)
 
         # Move data from next node that
         # Belongs in this node
-
+        # TODO
         pass
 
     '''
@@ -37,6 +39,7 @@ class HashRing:
 
     def removeNode(self, nodeId):
         # Get hashInt
+        key = self.hashInt(nodeId)
 
         # Get the node
 
@@ -47,12 +50,13 @@ class HashRing:
         pass
 
     '''
-    @param key: String
+    @param id: String
     @returns None
     '''
 
-    def addData(self, key, data):
+    def putData(self, id, data):
         # Find the hashInt
+        key = self.hashInt(id)
 
         # Find the node where data needs to go
 
@@ -60,14 +64,26 @@ class HashRing:
         pass
 
     '''
-    @param key: String
+    @param id: String
     @returns None
     '''
 
-    def getData(self, key):
+    def getData(self, id):
         # Find hashInt
+        key = self.hashInt(id)
 
         # Find the node where the data should exist
 
         # Get the data from the node
+        pass
+
+    '''
+    @param id: String
+    @returns None
+    '''
+
+    def removedata(self, id):
+        # Get hashInt
+        key = self.hashInt(id)
+
         pass
