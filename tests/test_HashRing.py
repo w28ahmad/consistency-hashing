@@ -13,7 +13,7 @@ def runTests():
     # Test basic HashRing functions
     testHashInt()
 
-    print("All tests passed!")
+    print("All HashRing tests passing!")
 
 
 if __name__ == "__main__":

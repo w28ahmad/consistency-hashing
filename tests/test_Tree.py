@@ -335,7 +335,7 @@ def runTests():
     testNonInorderDeleteLoadTest()
     testRootDeleteLoadTest()
 
-    print("All tests passed!")
+    print("All tree tests passing!")
 
 
 if __name__ == "__main__":

@@ -66,6 +66,8 @@ class AVLTree:
 
     def getSuccessor(self, node):
         # TODO: node.right = None?
+        if node.right is None:
+            pass
 
         node = node.right
         while node.left:
