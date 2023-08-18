@@ -42,10 +42,13 @@ class HashRing:
         key = self.hashInt(nodeId)
 
         # Get the node
+        node = self.hashring.find(key)
 
-        # Move the data out to next node on ring
+        # Get the successor
+        successor = self.hashring.getSuccessor(node)
 
         # Remove node
+        self.hashring.remove(key)
 
         pass
 

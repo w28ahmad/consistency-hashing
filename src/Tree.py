@@ -65,6 +65,8 @@ class AVLTree:
         self.root = insertHelper(key, self.root)
 
     def getSuccessor(self, node):
+        # TODO: node.right = None?
+
         node = node.right
         while node.left:
             node = node.left
