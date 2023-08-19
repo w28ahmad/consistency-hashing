@@ -52,12 +52,19 @@ class HashRing:
         if successor is None:
             successor = self.hashring.getSmallestNode()
 
-        # Move the data
+        # We have not removed all servers
+        if successor.key != key:
+            # Move the data
+            nodeData = node.data
+            successorData = successor.data
 
-        # Remove node
-        self.hashring.remove(key)
+            while not nodeData.isEmpty():
+                dataKey, data = nodeData.root.key, nodeData.root.data
+                successorData.insert(dataKey, data)
+                nodeData.delete(nodeData.root.key)
 
-        pass
+        # delete node
+        self.hashring.delete(key)
 
     '''
     @param id: String

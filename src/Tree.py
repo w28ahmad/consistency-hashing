@@ -39,7 +39,7 @@ class AVLTree:
             return findHelper(key, parent.left)
         return findHelper(key, self.root)
 
-    def insert(self, key):
+    def insert(self, key, data=None):
         def insertHelper(key, parent):
             if parent is None:
                 self.root = Node(key)
@@ -47,7 +47,7 @@ class AVLTree:
 
             if key > parent.key:
                 if parent.right is None:
-                    parent.right = Node(key)
+                    parent.right = Node(key, data=data)
                 else:
                     parent.right = insertHelper(key, parent.right)
                     parent = self.reBalanceRight(parent)
@@ -210,6 +210,9 @@ class AVLTree:
         rightHeight = self.fixHeight(node.right)
         node.height = max(leftHeight, rightHeight) + 1
         return node.height
+
+    def isEmpty(self):
+        return self.root is None
 
     def checkAndGetHeight(self, node):
         if node is None:
