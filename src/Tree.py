@@ -64,15 +64,32 @@ class AVLTree:
             return parent
         self.root = insertHelper(key, self.root)
 
-    def getSuccessor(self, node):
-        # TODO: node.right = None?
-        if node.right is None:
-            pass
+    def getSmallestNode(self):
+        currentSmallest = self.root
+        while currentSmallest.left:
+            currentSmallest = currentSmallest.left
+        return currentSmallest
 
-        node = node.right
-        while node.left:
-            node = node.left
-        return node
+    def getSuccessor(self, node):
+        if node.right:
+            node = node.right
+            while node.left:
+                node = node.left
+            return node
+
+        lastLeftTurnAncestor = None
+        currentRoot = self.root
+        while currentRoot:
+            if currentRoot.key == node.key:
+                break
+            elif node.key > currentRoot.key:
+                currentRoot = currentRoot.right
+            else:
+                lastLeftTurnAncestor = currentRoot
+                currentRoot = currentRoot.left
+        assert currentRoot is not None, "node should always be found in tree"
+
+        return lastLeftTurnAncestor
 
     def delete(self, key):
         def deleteHelper(key, node):

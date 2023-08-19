@@ -47,6 +47,13 @@ class HashRing:
         # Get the successor
         successor = self.hashring.getSuccessor(node)
 
+        # If no successor, the successor is the
+        # first node in the hashring
+        if successor is None:
+            successor = self.hashring.getSmallestNode()
+
+        # Move the data
+
         # Remove node
         self.hashring.remove(key)
 

@@ -218,6 +218,7 @@ def testBasicLeftDeletion():
     assert tree.root.right is None, "Root right is removed"
     assert tree.isValid(tree.root), "The tree is left in a valid state"
 
+
 def testBasicRightDeletion():
     tree = AVLTree()
     tree.insert(2)
@@ -308,6 +309,50 @@ def testRootDeleteLoadTest():
     assert tree.root is None, "All nodes are removed"
 
 
+def testGetSuccessorRightWeighted():
+    tree = AVLTree()
+    keysToInsert = [1, 2, 4, 3, 5]
+
+    for i in keysToInsert:
+        tree.insert(i)
+
+    assert tree.isValid(tree.root), "Tree is not valid"
+
+    successorOfOne = tree.getSuccessor(tree.find(1))
+    successorOfTwo = tree.getSuccessor(tree.find(2))
+    successorOfThree = tree.getSuccessor(tree.find(3))
+    successorOfFour = tree.getSuccessor(tree.find(4))
+    successorOfFive = tree.getSuccessor(tree.find(5))
+
+    assert successorOfOne.key == 2, "Successor of one is two"
+    assert successorOfTwo.key == 3, "Successor of two is three"
+    assert successorOfThree.key == 4, "Successor of three is four"
+    assert successorOfFour.key == 5, "Successor of four is five"
+    assert successorOfFive is None, "Successor of five is None"
+
+
+def testGetSuccessorLeftWeighted():
+    tree = AVLTree()
+    keysToInsert = [4, 2, 5, 1, 3]
+
+    for i in keysToInsert:
+        tree.insert(i)
+
+    assert tree.isValid(tree.root), "Tree is not valid"
+
+    successorOfOne = tree.getSuccessor(tree.find(1))
+    successorOfTwo = tree.getSuccessor(tree.find(2))
+    successorOfThree = tree.getSuccessor(tree.find(3))
+    successorOfFour = tree.getSuccessor(tree.find(4))
+    successorOfFive = tree.getSuccessor(tree.find(5))
+
+    assert successorOfOne.key == 2, "Successor of one is two"
+    assert successorOfTwo.key == 3, "Successor of two is three"
+    assert successorOfThree.key == 4, "Successor of three is four"
+    assert successorOfFour.key == 5, "Successor of four is five"
+    assert successorOfFive is None, "Successor of five is None"
+
+
 def runTests():
     # Test basic BST methods
     testFind()
@@ -334,6 +379,10 @@ def runTests():
     testInorderDeleteLoadTest()
     testNonInorderDeleteLoadTest()
     testRootDeleteLoadTest()
+
+    # Successor Tests
+    testGetSuccessorRightWeighted()
+    testGetSuccessorLeftWeighted()
 
     print("All tree tests passing!")
 
