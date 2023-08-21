@@ -25,12 +25,29 @@ class HashRing:
         key = self.hashInt(nodeId)
 
         # Add the node to the AVLTree
-        self.hashring.insert(key)
+        # The data data stucture is also an AVLtree
+        node = self.hashring.insert(key, AVLTree())
 
-        # Move data from next node that
-        # Belongs in this node
-        # TODO
-        pass
+        # Get the successor
+        successor = self.hashring.getSuccessor(node)
+
+        # If no successor, the successor is the
+        # first node in the hashring
+        if successor is None:
+            successor = self.hashring.getSmallestNode()
+
+        # This is not the only added node
+        if successor.key != key:
+            # Move the data from successor which
+            # belongs to the current node
+            nodeData = node.data
+            successorData = successor.data
+
+            # The data that needs to move
+            # are the keys which fall before 
+            # equal to the current keys value
+
+            pass
 
     '''
     @param nodeId: String
