@@ -353,6 +353,21 @@ def testGetSuccessorLeftWeighted():
     assert successorOfFive is None, "Successor of five is None"
 
 
+def testGetNodesWithSmallerKeys():
+    tree = AVLTree()
+    keysToInsert = [i for i in range(1, 101)]
+
+    for i in keysToInsert:
+        tree.insert(i)
+
+    assert tree.isValid(tree.root), "Tree is not valid"
+    nodesLessThan50 = tree.getNodesWithSmallerKeys(50)
+
+    assert len(nodesLessThan50) == 50, "Not the correct number of nodes"
+    for node in nodesLessThan50:
+        assert node.key <= 50, "Key is not less than 50"
+
+
 def runTests():
     # Test basic BST methods
     testFind()
@@ -384,6 +399,7 @@ def runTests():
     testGetSuccessorRightWeighted()
     testGetSuccessorLeftWeighted()
 
+    testGetNodesWithSmallerKeys()
     print("All tree tests passing!")
 
 
