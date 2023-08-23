@@ -64,6 +64,25 @@ class AVLTree:
             return parent
         self.root = insertHelper(key, self.root)
 
+    def getNodesWithSmallerKeys(self, key):
+        queue = [self.root]
+        smallerNodes = []
+
+        while queue:
+            node = queue.pop()
+            if not node:
+                continue
+            if node.key > key:
+                queue.append(node.left)
+            elif node.key == key:
+                smallerNodes.append(node)
+                queue.append(node.left)
+            else:
+                smallerNodes.append(node)
+                queue.append(node.left)
+                queue.append(node.right)
+        return smallerNodes
+
     def getSmallestNode(self):
         currentSmallest = self.root
         while currentSmallest.left:

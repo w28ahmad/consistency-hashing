@@ -40,14 +40,17 @@ class HashRing:
         if successor.key != key:
             # Move the data from successor which
             # belongs to the current node
-            nodeData = node.data
-            successorData = successor.data
+            nodeDataTree = node.data
+            successorDataTree = successor.data
 
             # The data that needs to move
-            # are the keys which fall before 
+            # are the keys which fall before
             # equal to the current keys value
+            nodesToMove = successorDataTree.getNodesWithSmallerKeys(key)
 
-            pass
+            for node in nodesToMove:
+                nodeDataTree.insert(node.key, node.data)
+                successorDataTree.delete(node.key)
 
     '''
     @param nodeId: String
@@ -72,13 +75,13 @@ class HashRing:
         # We have not removed all servers
         if successor.key != key:
             # Move the data
-            nodeData = node.data
-            successorData = successor.data
+            nodeDataTree = node.data
+            successorDataTree = successor.data
 
-            while not nodeData.isEmpty():
-                dataKey, data = nodeData.root.key, nodeData.root.data
-                successorData.insert(dataKey, data)
-                nodeData.delete(nodeData.root.key)
+            while not nodeDataTree.isEmpty():
+                dataKey, data = nodeDataTree.root.key, nodeDataTree.root.data
+                successorDataTree.insert(dataKey, data)
+                nodeDataTree.delete(nodeDataTree.root.key)
 
         # delete node
         self.hashring.delete(key)
