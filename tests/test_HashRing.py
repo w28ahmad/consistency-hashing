@@ -21,7 +21,7 @@ def testSimpleHashRing():
     assert cache.getData(request) == response, "Data doesn't match"
 
 
-def testSimpleReplacementTest():
+def testSimpleReplacement():
     cache = HashRing()
     cache.putNode(server)
     cache.putData(request, response)
@@ -31,6 +31,27 @@ def testSimpleReplacementTest():
     cache.removeNode(server)
 
     assert cache.getData(request) == response, "Data doesn't match"
+
+
+def testModerateReplacement():
+    cache = HashRing()
+    startingServer = ["s1", "s2", "s3"]
+    for s in startingServer:
+        cache.putNode(s)
+
+    data = [(str(r), str(r)) for r in range(8)]
+    for req, res in data:
+        cache.putData(req, res)
+
+    newServers = ["s4", "s5", "s6"]
+    for s in newServers:
+        cache.putNode(s)
+
+    for s in startingServer:
+        cache.removeNode(s)
+
+    for req, res in data:
+        assert cache.getData(req) == res, "Data does not match"
 
 
 def testEdgeCases():
@@ -46,7 +67,8 @@ def runTests():
     # Test basic HashRing functions
     testHashInt()
     testSimpleHashRing()
-    testSimpleReplacementTest()
+    testSimpleReplacement()
+    testModerateReplacement()
 
     print("All HashRing tests passing!")
 

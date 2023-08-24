@@ -72,6 +72,9 @@ class HashRing:
         # first node in the hashring
         if successor is None:
             successor = self.hashring.getSmallestNode()
+        if successor is None:
+            print("All Nodes Cleared -- Dropping Remaining Data")
+            return
 
         # We have not removed all servers
         if successor.key != key:
