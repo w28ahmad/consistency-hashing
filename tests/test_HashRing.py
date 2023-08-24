@@ -35,8 +35,8 @@ def testSimpleReplacement():
 
 def testModerateReplacement():
     cache = HashRing()
-    startingServer = ["s1", "s2", "s3"]
-    for s in startingServer:
+    startingServers = ["s1", "s2", "s3"]
+    for s in startingServers:
         cache.putNode(s)
 
     data = [(str(r), str(r)) for r in range(8)]
@@ -47,7 +47,7 @@ def testModerateReplacement():
     for s in newServers:
         cache.putNode(s)
 
-    for s in startingServer:
+    for s in startingServers:
         cache.removeNode(s)
 
     for req, res in data:
