@@ -26,7 +26,8 @@ class HashRing:
 
         # Add the node to the AVLTree
         # The data data stucture is also an AVLtree
-        node = self.hashring.insert(key, AVLTree())
+        self.hashring.insert(key, AVLTree())
+        node = self.hashring.find(key)
 
         # Get the successor
         successor = self.hashring.getSuccessorByNode(node)
