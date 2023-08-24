@@ -89,7 +89,32 @@ class AVLTree:
             currentSmallest = currentSmallest.left
         return currentSmallest
 
-    def getSuccessor(self, node):
+    def getSuccessorByKey(self, key):
+
+        def getSuccessorByKeyHelper(node, key, parent):
+            # Basecases
+            if not node:
+                if parent and parent.key > key:
+                    return parent
+                return None
+
+            # Recursion
+            if parent and node.key < key < parent.key:
+                return getSuccessorByKeyHelper(node.right, key, node) \
+                        or parent
+            if parent and parent.key < key < node.key:
+                return getSuccessorByKeyHelper(node.left, key, node) \
+                        or parent
+
+            if node.key == key:
+                return node
+            elif node.key > key:
+                return getSuccessorByKeyHelper(node.left, key, node)
+            else:
+                return getSuccessorByKeyHelper(node.right, key, node)
+        return getSuccessorByKeyHelper(self.root, key, None)
+
+    def getSuccessorByNode(self, node):
         if node.right:
             node = node.right
             while node.left:
@@ -119,7 +144,7 @@ class AVLTree:
                 hasRightNode = node.right is not None
 
                 if hasLeftNode and hasRightNode:
-                    successor = self.getSuccessor(node)
+                    successor = self.getSuccessorByNode(node)
                     successor.right = deleteHelper(successor.key, node.right)
                     successor.left = node.left
                     successor = self.reBalanceLeft(successor)

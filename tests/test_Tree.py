@@ -318,11 +318,11 @@ def testGetSuccessorRightWeighted():
 
     assert tree.isValid(tree.root), "Tree is not valid"
 
-    successorOfOne = tree.getSuccessor(tree.find(1))
-    successorOfTwo = tree.getSuccessor(tree.find(2))
-    successorOfThree = tree.getSuccessor(tree.find(3))
-    successorOfFour = tree.getSuccessor(tree.find(4))
-    successorOfFive = tree.getSuccessor(tree.find(5))
+    successorOfOne = tree.getSuccessorByNode(tree.find(1))
+    successorOfTwo = tree.getSuccessorByNode(tree.find(2))
+    successorOfThree = tree.getSuccessorByNode(tree.find(3))
+    successorOfFour = tree.getSuccessorByNode(tree.find(4))
+    successorOfFive = tree.getSuccessorByNode(tree.find(5))
 
     assert successorOfOne.key == 2, "Successor of one is two"
     assert successorOfTwo.key == 3, "Successor of two is three"
@@ -340,11 +340,11 @@ def testGetSuccessorLeftWeighted():
 
     assert tree.isValid(tree.root), "Tree is not valid"
 
-    successorOfOne = tree.getSuccessor(tree.find(1))
-    successorOfTwo = tree.getSuccessor(tree.find(2))
-    successorOfThree = tree.getSuccessor(tree.find(3))
-    successorOfFour = tree.getSuccessor(tree.find(4))
-    successorOfFive = tree.getSuccessor(tree.find(5))
+    successorOfOne = tree.getSuccessorByNode(tree.find(1))
+    successorOfTwo = tree.getSuccessorByNode(tree.find(2))
+    successorOfThree = tree.getSuccessorByNode(tree.find(3))
+    successorOfFour = tree.getSuccessorByNode(tree.find(4))
+    successorOfFive = tree.getSuccessorByNode(tree.find(5))
 
     assert successorOfOne.key == 2, "Successor of one is two"
     assert successorOfTwo.key == 3, "Successor of two is three"
@@ -366,6 +366,34 @@ def testGetNodesWithSmallerKeys():
     assert len(nodesLessThan50) == 50, "Not the correct number of nodes"
     for node in nodesLessThan50:
         assert node.key <= 50, "Key is not less than 50"
+
+
+def testGetSuccessorByKey():
+    tree = AVLTree()
+    keysToInsert = [8, 4, 11, 2, 6, 9, 13]
+
+    for i in keysToInsert:
+        tree.insert(i)
+
+    assert tree.isValid(tree.root), "Tree is not valid"
+
+    successorOfOne = tree.getSuccessorByKey(1)
+    successorOfTwo = tree.getSuccessorByKey(2)
+    successorOfThree = tree.getSuccessorByKey(3)
+    successorOfFive = tree.getSuccessorByKey(5)
+    successorOfSeven = tree.getSuccessorByKey(7)
+    successorOfTen = tree.getSuccessorByKey(10)
+    successorOfTwelve = tree.getSuccessorByKey(12)
+    successorOfFourteen = tree.getSuccessorByKey(14)
+
+    assert successorOfOne.key == 2, "Incorrect Successor"
+    assert successorOfTwo.key == 2, "Incorrect Successor"
+    assert successorOfThree.key == 4, "Incorrect Successor"
+    assert successorOfFive.key == 6, "Incorrect Successor"
+    assert successorOfSeven.key == 8, "Incorrect Successor"
+    assert successorOfTen.key == 11, "Incorrect Successor"
+    assert successorOfTwelve.key == 13, "Incorrect Successor"
+    assert successorOfFourteen is None, "Incorrect Successor"
 
 
 def runTests():
@@ -398,6 +426,7 @@ def runTests():
     # Successor Tests
     testGetSuccessorRightWeighted()
     testGetSuccessorLeftWeighted()
+    testGetSuccessorByKey()
 
     testGetNodesWithSmallerKeys()
     print("All tree tests passing!")

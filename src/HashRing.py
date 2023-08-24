@@ -29,7 +29,7 @@ class HashRing:
         node = self.hashring.insert(key, AVLTree())
 
         # Get the successor
-        successor = self.hashring.getSuccessor(node)
+        successor = self.hashring.getSuccessorByNode(node)
 
         # If no successor, the successor is the
         # first node in the hashring
@@ -65,7 +65,7 @@ class HashRing:
         node = self.hashring.find(key)
 
         # Get the successor
-        successor = self.hashring.getSuccessor(node)
+        successor = self.hashring.getSuccessorByNode(node)
 
         # If no successor, the successor is the
         # first node in the hashring
@@ -96,9 +96,16 @@ class HashRing:
         key = self.hashInt(id)
 
         # Find the node where data needs to go
+        successor = self.hashring.getSuccessorByKey(key)
+        if successor is None:
+            successor = self.hashring.getSmallestNode()
+        if successor is None:
+            print("No Storage Nodes")
+            return
 
         # Add the data to the node
-        pass
+        successorDataTree = successor.data
+        successorDataTree.insert(key, data)
 
     '''
     @param id: String
@@ -110,17 +117,34 @@ class HashRing:
         key = self.hashInt(id)
 
         # Find the node where the data should exist
+        successor = self.hashring.getSuccessorByKey(key)
+        if successor is None:
+            successor = self.hashring.getSmallestNode()
+        if successor is None:
+            print("No Storage Node")
+            return
 
         # Get the data from the node
-        pass
+        successorDataTree = successor.data
+        return successorDataTree.find(key).data
 
     '''
     @param id: String
     @returns None
     '''
 
-    def removedata(self, id):
+    def removeData(self, id):
         # Get hashInt
         key = self.hashInt(id)
 
-        pass
+        # Find the node where data exists
+        successor = self.hashring.getSuccessorByKey(key)
+        if successor is None:
+            successor = self.hashring.getSmallestNode()
+        if successor is None:
+            print("No Storage Node")
+            return
+
+        # Remove the data from the node
+        successorDataTree = successor.data
+        successorDataTree.delete(key)
