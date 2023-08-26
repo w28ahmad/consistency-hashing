@@ -78,6 +78,12 @@ class HashRing:
         # Get the node
         node = self.hashring.find(removalKey)
 
+        # Assure node exists
+        if node is None:
+            if debug:
+                print("Node not found")
+            return
+
         # Get the successor
         successor = self.hashring.getSuccessorByNode(node)
 
@@ -152,12 +158,21 @@ class HashRing:
         if successor is None:
             successor = self.hashring.getSmallestNode()
         if successor is None:
-            print("No Storage Node")
+            if debug:
+                print("No Storage Node")
             return
 
         # Get the data from the node
         successorDataTree = successor.data
-        return successorDataTree.find(key).data
+
+        # Ensure the node exists
+        if (dataNode := successorDataTree.find(key)) is not None:
+            return dataNode.data
+
+        if debug:
+            print("data not found")
+
+        return None
 
     '''
     @param id: String
@@ -173,12 +188,14 @@ class HashRing:
         if successor is None:
             successor = self.hashring.getSmallestNode()
         if successor is None:
-            print("No Storage Node")
+            if debug:
+                print("No Storage Node")
             return
 
         # Remove the data from the node
         successorDataTree = successor.data
         successorDataTree.delete(key)
 
+    # print key to Id mapping
     def printDebug(self):
         print(self.keyToId)

@@ -102,13 +102,33 @@ def testComplexReplacement():
         assert cache.getData(req) == res, f"Data mismatch for request {req}"
 
 
-def testEdgeCases():
-    pass
+def testRemovingMissingData():
+    cache = HashRing()
+    cache.putNode(server)
+    cache.removeData(request)
 
 
-def testInvalidScenarios():
-    # Ex: Remove all nodes but without removing data
-    pass
+def testRemovingMissingNode():
+    cache = HashRing()
+    cache.removeNode(server)
+
+    cache.putNode(server)
+    cache.removeNode('s9')
+
+
+def testRemoveNodesWithoutRemovingData():
+    cache = HashRing()
+    cache.putNode(server)
+    cache.putData(request, response)
+    cache.removeNode(server)
+
+    assert cache.getData(request) is None, "Data should not exist anymore"
+
+    cache.putNode(server)
+    assert cache.getData(request) is None, "Data should not exist anymore"
+
+    cache.putData(request, response)
+    assert cache.getData(request) == response, "Data should exist"
 
 
 def runTests():
@@ -119,6 +139,10 @@ def runTests():
     testModerateReplacement()
     testComplexReplacement()
 
+    # Invalid Cases
+    testRemovingMissingData()
+    testRemovingMissingNode()
+    testRemoveNodesWithoutRemovingData()
     print("All HashRing tests passing!")
 
 

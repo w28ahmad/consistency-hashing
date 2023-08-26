@@ -104,7 +104,7 @@ class AVLTree:
 
     def getSmallestNode(self):
         currentSmallest = self.root
-        while currentSmallest.left:
+        while currentSmallest and currentSmallest.left:
             currentSmallest = currentSmallest.left
         return currentSmallest
 
