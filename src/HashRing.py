@@ -7,8 +7,7 @@ debug = False
 class HashRing:
     def __init__(self):
         self.hashring = AVLTree()
-        if debug:
-            self.keyToId = {}
+        self.keyToId = {}
 
     '''
     @param id: String
