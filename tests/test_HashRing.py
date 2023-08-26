@@ -61,56 +61,45 @@ def testComplexReplacement():
     initialServers = ["s1", "s2", "s3", "s4", "s5"]
     for s in initialServers:
         cache.putNode(s)
-    print("step 1")
 
     # Insert a range of data into the hash ring
     initialData = [(str(r), str(r)) for r in range(50)]
     for req, res in initialData:
         cache.putData(req, res)
-    print("step 2")
 
     # Now, add some new servers and remove some of the initial ones
     newServers = ["s6", "s7", "s8"]
     for s in newServers:
         cache.putNode(s)
-    print("step 3")
 
     removedServers = ["s2", "s4", "s5"]
     for s in removedServers:
         cache.removeNode(s)
-    print("step 4")
 
     # Insert some more data after the servers have been replaced
-    # additionalData = [(str(r+100), str(r+100)) for r in range(20)]
-    # for req, res in additionalData:
-    #     cache.putData(req, res)
-    # print("step 5")
+    additionalData = [(str(r+100), str(r+100)) for r in range(20)]
+    for req, res in additionalData:
+        cache.putData(req, res)
 
     # Ensure all data (initial and additional) is still accessible
-    # for req, res in initialData + additionalData:
-    #     assert cache.getData(req) == res, f"Data mismatch for request {req}"
-    # print("step 6")
-    # print("PASSED")
+    for req, res in initialData + additionalData:
+        assert cache.getData(req) == res, f"Data mismatch for request {req}"
 
     # Let's now remove all new servers and add back the removed servers
     for s in newServers:
         cache.removeNode(s)
-    print("step 7")
 
-    # for s in removedServers:
-    #     cache.putNode(s)
-    # print("step 8")
+    for s in removedServers:
+        cache.putNode(s)
 
     # Insert some final set of data
-    # finalData = [(str(r+200), str(r+200)) for r in range(10)]
-    # for req, res in finalData:
-    #     cache.putData(req, res)
-    # print("step 9")
+    finalData = [(str(r+200), str(r+200)) for r in range(10)]
+    for req, res in finalData:
+        cache.putData(req, res)
 
     # Ensure all data (initial, additional, and final) is still accessible
-    # for req, res in initialData + additionalData + finalData:
-    #     assert cache.getData(req) == res, f"Data mismatch for request {req}"
-    # print("step 10")
+    for req, res in initialData + additionalData + finalData:
+        assert cache.getData(req) == res, f"Data mismatch for request {req}"
 
 
 def testEdgeCases():

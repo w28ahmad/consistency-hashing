@@ -60,6 +60,9 @@ class HashRing:
                     .getNodesWithInvalidKeys(successor.key))
 
             for node in nodesToMove:
+                if debug:
+                    print(f"moving node with key {node.data} \
+                            to {nodeId} from {self.keyToId[successor.key]}")
                 nodeDataTree.insert(node.key, node.data)
                 successorDataTree.delete(node.key)
 
@@ -70,10 +73,10 @@ class HashRing:
 
     def removeNode(self, nodeId):
         # Get hashInt
-        key = self.hashInt(nodeId)
+        removalKey = self.hashInt(nodeId)
 
         # Get the node
-        node = self.hashring.find(key)
+        node = self.hashring.find(removalKey)
 
         # Get the successor
         successor = self.hashring.getSuccessorByNode(node)
@@ -91,7 +94,7 @@ class HashRing:
             return
 
         # We have not removed all servers
-        if successor.key != key:
+        if successor.key != removalKey:
             # Move the data
             nodeDataTree = node.data
             successorDataTree = successor.data
@@ -99,7 +102,9 @@ class HashRing:
 
             while not nodeDataTree.isEmpty():
                 dataKey, data = nodeDataTree.root.key, nodeDataTree.root.data
-                if dataKey > key:
+                if debug:
+                    print(f"Trying to remove {data}")
+                if dataKey > removalKey and smallestNode.key != removalKey:
                     # Loop around
                     smallestNodeDataTree.insert(dataKey, data)
                 else:
@@ -107,7 +112,7 @@ class HashRing:
                 nodeDataTree.delete(nodeDataTree.root.key)
 
         # delete node
-        self.hashring.delete(key)
+        self.hashring.delete(removalKey)
 
     '''
     @param id: String
@@ -125,6 +130,9 @@ class HashRing:
         if successor is None:
             print("No Storage Nodes")
             return
+
+        if debug:
+            print(f"Adding data {data} to {self.keyToId[successor.key]}")
 
         # Add the data to the node
         successorDataTree = successor.data
