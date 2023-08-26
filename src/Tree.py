@@ -83,11 +83,36 @@ class AVLTree:
                 queue.append(node.right)
         return smallerNodes
 
+    def getNodesWithInvalidKeys(self, key):
+        queue = [self.root]
+        invalidNodes = []
+
+        while queue:
+            node = queue.pop()
+            if not node:
+                continue
+            if node.key > key:
+                invalidNodes.append(node)
+                queue.append(node.right)
+                queue.append(node.left)
+            elif node.key == key:
+                queue.append(node.right)
+            else:
+                queue.append(node.right)
+
+        return invalidNodes
+
     def getSmallestNode(self):
         currentSmallest = self.root
         while currentSmallest.left:
             currentSmallest = currentSmallest.left
         return currentSmallest
+
+    def isSmallestNode(self, key):
+        if self.root is None:
+            print("No nodes found")
+            return
+        return self.getSmallestNode().key == key
 
     def getSuccessorByKey(self, key):
 

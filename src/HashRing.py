@@ -1,10 +1,14 @@
 from src.Tree import AVLTree
 from hashlib import sha256
 
+debug = False
+
 
 class HashRing:
     def __init__(self):
         self.hashring = AVLTree()
+        if debug:
+            self.keyToId = {}
 
     '''
     @param id: String
@@ -13,7 +17,10 @@ class HashRing:
 
     def hashInt(self, id):
         hash = sha256(id.encode())
-        return int(hash.hexdigest(), 16)
+        key = int(hash.hexdigest(), 16)
+        if debug:
+            self.keyToId[key] = id
+        return key
 
     '''
     @param nodeId: String
@@ -48,6 +55,10 @@ class HashRing:
             # are the keys which fall before
             # equal to the current keys value
             nodesToMove = successorDataTree.getNodesWithSmallerKeys(key)
+            if self.hashring.isSmallestNode(key):
+                # Need to transfer the loop over nodes
+                nodesToMove.extend(successorDataTree
+                    .getNodesWithInvalidKeys(successor.key))
 
             for node in nodesToMove:
                 nodeDataTree.insert(node.key, node.data)
@@ -68,6 +79,10 @@ class HashRing:
         # Get the successor
         successor = self.hashring.getSuccessorByNode(node)
 
+        # Get smallest node incase
+        # we need to loop nodes around to the Start
+        smallestNode = self.hashring.getSmallestNode()
+
         # If no successor, the successor is the
         # first node in the hashring
         if successor is None:
@@ -81,10 +96,15 @@ class HashRing:
             # Move the data
             nodeDataTree = node.data
             successorDataTree = successor.data
+            smallestNodeDataTree = smallestNode.data
 
             while not nodeDataTree.isEmpty():
                 dataKey, data = nodeDataTree.root.key, nodeDataTree.root.data
-                successorDataTree.insert(dataKey, data)
+                if dataKey > key:
+                    # Loop around
+                    smallestNodeDataTree.insert(dataKey, data)
+                else:
+                    successorDataTree.insert(dataKey, data)
                 nodeDataTree.delete(nodeDataTree.root.key)
 
         # delete node
@@ -152,3 +172,6 @@ class HashRing:
         # Remove the data from the node
         successorDataTree = successor.data
         successorDataTree.delete(key)
+
+    def printDebug(self):
+        print(self.keyToId)
