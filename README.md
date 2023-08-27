@@ -9,6 +9,7 @@ a HashRing and use it to add and remove cache servers and move the
 cache data appropriately to the remaining nodes.
 
 
-I have written a more detailed explination on my blog: TODO
+I have written a more detailed explination on my blog: 
+https://w28ahmad.github.io/post/consistent_hashing/
 
 
